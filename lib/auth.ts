@@ -2,9 +2,9 @@ import { betterAuth } from "better-auth"
 import { nextCookies } from "better-auth/next-js"
 import { drizzleAdapter } from "better-auth/adapters/drizzle"
 import { db } from "@/db"
-import { admin } from "better-auth/plugins"
 
 export const auth = betterAuth({
+  baseURL: process.env.NEXT_PUBLIC_APP_URL,
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
@@ -29,8 +29,4 @@ export const auth = betterAuth({
     },
   },
   plugins: [nextCookies()],
-  baseURL: {
-    allowedHosts: ["n8n.sohamingle.me", "localhost:*"],
-    fallback: process.env.NEXT_PUBLIC_API_URL,
-  },
 })

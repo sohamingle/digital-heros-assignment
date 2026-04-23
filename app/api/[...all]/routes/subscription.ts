@@ -52,8 +52,8 @@ subscriptionRoutes.post("/subscription/checkout", async (c) => {
       payment_method_types: ["card"],
       line_items: [{ price: planData.stripePriceId, quantity: 1 }],
       mode: "subscription",
-      success_url: `${process.env.NEXT_PUBLIC_API_URL}/dashboard/settings?success=true`,
-      cancel_url: `${process.env.NEXT_PUBLIC_API_URL}/dashboard/settings?cancelled=true`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/settings?success=true`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/settings?cancelled=true`,
       metadata: { userId: u.id, plan },
       allow_promotion_codes: true,
       billing_address_collection: "auto",
@@ -104,7 +104,7 @@ subscriptionRoutes.post("/subscription/portal", async (c) => {
   const stripeClient = new stripe(stripeKey)
   const portalSession = await stripeClient.billingPortal.sessions.create({
     customer: customerId,
-    return_url: `${process.env.NEXT_PUBLIC_API_URL}/dashboard/settings`,
+    return_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/settings`,
   })
 
   return c.json({ url: portalSession.url })
